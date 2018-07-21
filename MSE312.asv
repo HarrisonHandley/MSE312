@@ -234,8 +234,8 @@ PKp = 1;
 PKi = 1;
 PKd = 1;
 %   MATLAB Functions
-PIDPosTF = tf([PKd PKp PKi], [1 0]) * PosTF;
-FBPIDPosTF = feedback(PIDPosTF, 1);
+FBPIDPosTF = tf([PKd PKp PKi], [1 0]) * FBPosTF;
+FBPIPosTF = feedback(PIPosTF, 1);
 figure(4)
 subplot(2,2,1)
 [yPPIDM, tPPIDM, xPPIDM] = lsim(FBPIDPosTF,u,t);
@@ -246,8 +246,7 @@ PPIDMInfo = stepinfo(yPPIDM, tPPIDM, pi*0.75);
 title(['Position - PID Control MATLAB Functions | Settling Time:' num2str(PPIDMInfo.SettlingTime) ' Overshoot: ' num2str(PPIDMInfo.Overshoot*180/pi) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
-PIDPosTFNum = (PKp + PKi/s + PKd*s) * PosTFNum;
-FBPIDPosTFNum = PIDPosTFNum/(1 + PIDPosTFNum);
+FBPIDPosTFNum = (PKp + PKi/s + PKd*s) * FBPosTFNum;
 subplot(2,2,2)
 [yPPIDN, tPPIDN, xPPIDN] = lsim(FBPIDPosTFNum,u,t);
 plot(tPPIDN, yPPIDN)
@@ -259,11 +258,10 @@ xlim([0 lim])
 
 %   Speed
 SKp = 1;
-SKi = 1;
+SKi = 100;
 SKd = 1;
 %   MATLAB Functions
-PIDSpeedTF = tf([SKd SKp SKi], [1 0]) * SpeedTF;
-FBPIDSpeedTF = feedback(PIDSpeedTF, 1);
+FBPIDSpeedTF = tf([SKd SKp SKi], [1 0]) * FBSpeedTF;
 subplot(2,2,3)
 [ySPIDM, tSPIDM, xSPIDM] = lsim(FBPIDSpeedTF,u,t);
 plot(tSPIDM, ySPIDM)
@@ -273,8 +271,7 @@ SPIDMInfo = stepinfo(ySPIDM, tSPIDM, pi*0.75);
 title(['Speed - PID Control MATLAB Functions | Settling Time:' num2str(SPIDMInfo.SettlingTime) ' Overshoot: ' num2str(SPIDMInfo.Overshoot*180/pi) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
-PIDSpeedTFNum = (SKp + SKi/s + SKd*s) * SpeedTFNum;
-FBPIDSpeedTFNum = PIDSpeedTFNum/(1 + PIDSpeedTFNum);
+FBPIDSpeedTFNum = (SKp + SKi/s + SKd*s) * FBSpeedTFNum;
 subplot(2,2,4)
 [ySPIDN, tSPIDN, xSPIDN] = lsim(FBPIDSpeedTFNum,u,t);
 plot(tSPIDN, ySPIDN)
