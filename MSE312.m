@@ -106,7 +106,7 @@ sigrid(2)
 
 %%  PID Simulations
 %   Generate Input Signal
-[u,t] = gensig('square', 4, 14, 0.01);
+[u,t] = gensig('square', 4, 14, 0.0001);
 lim = 14;
 %   Processing on Input Signal
 for i = 1:length(u)
@@ -122,7 +122,7 @@ u(i) = 0;
 %%  P Controller
 
 %   Position
-PKp = 5;
+PKp = 5000;
 %   MATLAB Functions
 PPosTF = tf(PKp, 1) * PosTF;
 FBPPosTF = feedback(PPosTF, 1);
@@ -148,7 +148,7 @@ title(['Position - P Control Numeric | Settling Time:' num2str(PPNInfo.SettlingT
 xlim([0 lim])
 
 %   Speed
-SKp = 10;
+SKp = 1000;
 %   MATLAB Functions
 PSpeedTF = tf(SKp, 1) * SpeedTF;
 FBPSpeedTF = feedback(PSpeedTF, 1);
@@ -175,8 +175,8 @@ xlim([0 lim])
 %%  PI Controller
 
 %   Position
-PKp = 1;
-PKi = 1;
+PKp = 1000;
+PKi = 1000;
 %   MATLAB Functions
 PIPosTF = tf([PKp PKi], [1 0]) * PosTF;
 FBPIPosTF = feedback(PIPosTF, 1);

@@ -29,14 +29,14 @@ B = [1/La
      0];
  
 C = [0 1 0];
-Cspeed = [0 0 1];
+
 
 D = [];
 
 PosSystem = ss(A,B,C,D);
-SpeedSystem = ss(A,B,Cspeed,D);
 
-%%  Optimal Matrices
+
+%%  Weighting Matrices
 Q = [1  0   0
      0  10  0
      0  0   1000];
@@ -70,17 +70,12 @@ end
 u(i) = 0;
 
 
-tspan = 0:0.001:10;
-y0 = [0
-      0
-      0];
-
-[t,y] = ode45(@(t,y)((A)*(y - [0; 0; pi])),t,y);
-[topt,yopt] = ode45(@(topt,yopt)((A-B*K)*(yopt - [0; 0; pi])),tspan,y0);
+[tOL,yOL] = ode45(@(t,y)((A)*(y - [0; 0; pi])),t,u);
+[topt,yopt] = ode45(@(topt,yopt)((A-B*K)*(yopt - [0; 0; pi])),t,u);
 
 %%  Plotting
 figure(1)
-plot(t,y(:,3),'k','LineWidth',2)
+plot(tOL,yOL(:,3),'k','LineWidth',2)
 hold on
 plot(topt,yopt(:,3),'r', 'LineWidth', 2)
 grid on

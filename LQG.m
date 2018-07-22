@@ -29,14 +29,13 @@ B = [1/La
      0];
  
 C = [0 1 0];
-Cspeed = [0 0 1];
 
 D = [];
 
-PosSystem = ss(A,B,C,D);
-SpeedSystem = ss(A,B,Cspeed,D);
+System = ss(A,B,C,D);
 
-%%  Optimal Matrices
+
+%%  Weighting Matrices
 Q = [1  0   0
      0  10  0
      0  0   1000];
