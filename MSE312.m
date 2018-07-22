@@ -133,7 +133,7 @@ plot(tPPM, yPPM)
 hold on
 plot(t, u)
 PPMInfo = stepinfo(yPPM, tPPM, pi*0.75);
-title(['Position - P Control MATLAB Functions | Settling Time:' num2str(PPMInfo.SettlingTime) ' Overshoot: ' num2str(PPMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - P Control MATLAB Functions | Settling Time:' num2str(PPMInfo.SettlingTime) ' Overshoot: ' num2str(PPMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PPosTFNum = PKp * PosTFNum;
@@ -144,7 +144,7 @@ plot(tPPN, yPPN)
 hold on
 plot(t, u)
 PPNInfo = stepinfo(yPPN, tPPN, pi*0.75);
-title(['Position - P Control Numeric | Settling Time:' num2str(PPNInfo.SettlingTime) ' Overshoot: ' num2str(PPNInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - P Control Numeric | Settling Time:' num2str(PPNInfo.SettlingTime) ' Overshoot: ' num2str(PPNInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 
 %   Speed
@@ -158,7 +158,7 @@ plot(tSPM, ySPM)
 hold on
 plot(t, u)
 SPMInfo = stepinfo(ySPM, tSPM, pi*0.75);
-title(['Speed - P Control MATLAB Functions | Settling Time:' num2str(SPMInfo.SettlingTime) ' Overshoot: ' num2str(SPMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - P Control MATLAB Functions | Settling Time:' num2str(SPMInfo.SettlingTime) ' Overshoot: ' num2str(SPMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PSpeedTFNum = SKp * SpeedTFNum;
@@ -169,7 +169,7 @@ plot(tSPN, ySPN)
 hold on
 plot(t, u)
 SPNInfo = stepinfo(ySPN, tSPN, pi*0.75);
-title(['Speed - P Control Numeric | Settling Time:' num2str(SPNInfo.SettlingTime) ' Overshoot: ' num2str(SPNInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - P Control Numeric | Settling Time:' num2str(SPNInfo.SettlingTime) ' Overshoot: ' num2str(SPNInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 
 %%  PI Controller
@@ -187,7 +187,7 @@ plot(tPPIM, yPPIM)
 hold on
 plot(t, u)
 PPIMInfo = stepinfo(yPPIM, tPPIM, pi*0.75);
-title(['Position - PI Control MATLAB Functions | Settling Time:' num2str(PPIMInfo.SettlingTime) ' Overshoot: ' num2str(PPIMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - PI Control MATLAB Functions | Settling Time:' num2str(PPIMInfo.SettlingTime) ' Overshoot: ' num2str(PPIMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PIPosTFNum = (PKp + PKi/s) * PosTFNum;
@@ -198,7 +198,7 @@ plot(tPPIN, yPPIN)
 hold on
 plot(t, u)
 PPINInfo = stepinfo(yPPIN, tPPIN, pi*0.75);
-title(['Position - PI Control Numeric | Settling Time:' num2str(PPINInfo.SettlingTime) ' Overshoot: ' num2str(PPINInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - PI Control Numeric | Settling Time:' num2str(PPINInfo.SettlingTime) ' Overshoot: ' num2str(PPINInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 
 %   Speed
@@ -213,7 +213,7 @@ plot(tSPIM, ySPIM)
 hold on
 plot(t, u)
 SPIMInfo = stepinfo(ySPIM, tSPIM, pi*0.75);
-title(['Speed - PI Control MATLAB Functions | Settling Time:' num2str(SPIMInfo.SettlingTime) ' Overshoot: ' num2str(SPIMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - PI Control MATLAB Functions | Settling Time:' num2str(SPIMInfo.SettlingTime) ' Overshoot: ' num2str(SPIMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PISpeedTFNum = (SKp + SKi/s) * SpeedTFNum;
@@ -224,7 +224,7 @@ plot(tSPIN, ySPIN)
 hold on
 plot(t, u)
 SPINInfo = stepinfo(ySPIN, tSPIN, pi*0.75);
-title(['Speed - PI Control Numeric | Settling Time:' num2str(SPINInfo.SettlingTime) ' Overshoot: ' num2str(SPINInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - PI Control Numeric | Settling Time:' num2str(SPINInfo.SettlingTime) ' Overshoot: ' num2str(SPINInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 
 %%  PID Controller
@@ -243,7 +243,7 @@ plot(tPPIDM, yPPIDM)
 hold on
 plot(t, u)
 PPIDMInfo = stepinfo(yPPIDM, tPPIDM, pi*0.75);
-title(['Position - PID Control MATLAB Functions | Settling Time:' num2str(PPIDMInfo.SettlingTime) ' Overshoot: ' num2str(PPIDMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - PID Control MATLAB Functions | Settling Time:' num2str(PPIDMInfo.SettlingTime) ' Overshoot: ' num2str(PPIDMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PIDPosTFNum = (PKp + PKi/s + PKd*s) * PosTFNum;
@@ -254,7 +254,7 @@ plot(tPPIDN, yPPIDN)
 hold on
 plot(t, u)
 PPIDNInfo = stepinfo(yPPIDN, tPPIDN, pi*0.75);
-title(['Position - PID Control Numeric | Settling Time:' num2str(PPIDNInfo.SettlingTime) ' Overshoot: ' num2str(PPIDNInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Position - PID Control Numeric | Settling Time:' num2str(PPIDNInfo.SettlingTime) ' Overshoot: ' num2str(PPIDNInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 
 %   Speed
@@ -270,7 +270,7 @@ plot(tSPIDM, ySPIDM)
 hold on
 plot(t, u)
 SPIDMInfo = stepinfo(ySPIDM, tSPIDM, pi*0.75);
-title(['Speed - PID Control MATLAB Functions | Settling Time:' num2str(SPIDMInfo.SettlingTime) ' Overshoot: ' num2str(SPIDMInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - PID Control MATLAB Functions | Settling Time:' num2str(SPIDMInfo.SettlingTime) ' Overshoot: ' num2str(SPIDMInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
 %   Numeric
 PIDSpeedTFNum = (SKp + SKi/s + SKd*s) * SpeedTFNum;
@@ -281,5 +281,5 @@ plot(tSPIDN, ySPIDN)
 hold on
 plot(t, u)
 SPIDNInfo = stepinfo(ySPIDN, tSPIDN, pi*0.75);
-title(['Speed - PID Control Numeric | Settling Time:' num2str(SPIDNInfo.SettlingTime) ' Overshoot: ' num2str(SPIDNInfo.Overshoot*180/pi) ' [Degs]'])
+title(['Speed - PID Control Numeric | Settling Time:' num2str(SPIDNInfo.SettlingTime) ' Overshoot: ' num2str(SPIDNInfo.Overshoot*1.35) ' [Degs]'])
 xlim([0 lim])
