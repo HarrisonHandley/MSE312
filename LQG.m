@@ -16,34 +16,53 @@ theta_dot = 0;  %   [rad/s] Motor Speed
 V = 0;          %   [V] Voltage from H Bridge
 
 %%  State Space Model
-x = [i
-     theta
-     theta_dot];
+x = [theta
+     theta_dot
+     i];
  
-A = [-Ra/La  -K/La   0
-     K/J     -b/J    0
-     0        1      0];
+A = [0      1       0
+     0     -b/J     K/J
+     0     -K/La     -Ra/La];
  
-B = [1/La
+B = [0
      0
-     0];
+     1/La];
  
-C = [0 1 0];
+C = [1 0 0];
+Cfull = eye(3);
 
 D = [];
 
 System = ss(A,B,C,D);
+fullsys = ss(A,B,Cfull,D);
 
+Controllability = rank(ctrb(A,B))
+Observability = rank(obsv(A,C))
 
-%%  Weighting Matrices
+%%  Optimal Matrices For LQR
 Q = [1  0   0
-     0  10  0
-     0  0   1000];
+     0  0  0
+     0  0   0];
  
-R = 0.1;
+R = 5;
 
 %%  Optimal Linear Gain Matrix
-K = lqr(A,B,Q,R);
+K = lqr(System,Q,R);
+
+%%  Kalman Filter 
+%%  System Disturbances
+Vd = 0.1*eye(3);    % Disturbance Covariance
+Vn = 1;             % Noise Covariance
+
+BF = [B Vd 0*B];    % New B Matrix For Kalman Filter (No measurement noise)
+
+sysC = ss(A, BF, C, [0 0 0 0 Vn]);    % Includes new D matrix (no disturbance noise)
+
+sysFullOutput = ss(A, BF, eye(3), zeros(3,size(BF,2))); % Outputs all state variables
+
+%%  Build Kalman Filter
+[L, P, E] = lqe(A, Vd, C, Vd, Vn);
+sysKF = ss(A-L*C, [B L], eye(3), 0*[B L]);  % Kalman Filter Estimator
 
 %%  Linear Controller Feedback
 Aopt = (A-B*K);
@@ -53,8 +72,8 @@ Dopt = D;
 
 optsystem = ss(Aopt, Bopt, Copt, Dopt);
 
-%%  Simulation
-[u,t] = gensig('square', 4, 14, 0.01);
+%%  Simulation Setup
+[u,t] = gensig('square', 4, 14, 0.001);
 lim = 14;
 %   Processing on Input Signal
 for i = 1:length(u)
@@ -68,23 +87,29 @@ for i = 1:length(u)
 end
 u(i) = 0;
 
+uDIST = randn(3,size(t,1));
+uNOISE = randn(size(t));
 
-[tOL,yOL] = ode45(@(t,y)((A)*(y - [0; 0; pi])),t,u);
-[topt,yopt] = ode45(@(topt,yopt)((A-B*K)*(yopt - [0; 0; pi])),t,u);
+uAUG = [u'; Vd*Vd*uDIST; uNOISE'];
+    
+%%  Simulation
+[y,t] = lsim(sysC, uAUG,t);
+[xtrue, t] = lsim(sysFullOutput, uAUG, t);
+[xopt,t] = lsim(optsystem, u, t);
+
+[x,t] = lsim(sysKF, [u'; y'], t);
 
 %%  Plotting
-figure(1)
-plot(tOL,yOL(:,3),'k','LineWidth',2)
+plot(t,xtrue,'-',t,x,'--','LineWidth',2)
+
+figure
+plot(t,y)
 hold on
-plot(topt,yopt(:,3),'r', 'LineWidth', 2)
-grid on
-mylegend=legend ('Closed Loop', 'Optimized State Feedback');
-set (mylegend,'FontSize',20,'Location','SouthEast')
-myxlabel=xlabel ('time [s]');
-myylabel=ylabel ('Angular Position [rad]');
-set (myxlabel,'FontSize',24)
-set (myylabel,'FontSize',24)
-title('Closed Loop vs Optimized State Feedback', 'FontSize',24)
+plot(t,xtrue(:,1),'r')
+plot(t,x(:,1),'k--')
 
-
-step(system, optsystem)
+figure
+plot(t,xopt,'-',t,u,'--')
+% 
+% 
+% step(system, optsystem)
